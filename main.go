@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+)
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
 
 func main() {
-	fmt.Printf("Hello %s", "jermaine")
+	dat, err := ioutil.ReadFile("test.coverprofile")
+	check(err)
+
+	fmt.Print(string(dat))
 }
