@@ -19,6 +19,9 @@ const (
 	CoverageStartAndEndLineDelimiter = ","
 	// CoveredAndUnCoveredLinesDelimiter - Delimiter used between covered lines and uncovered lines
 	CoveredAndUnCoveredLinesDelimiter = " "
+
+	// SonarSchemaVersion dictates the version of the sonar generic code coverage schema
+	SonarSchemaVersion = 1
 )
 
 func check(e error) {
@@ -46,6 +49,7 @@ func main() {
 	fileArr := processCoverageData(scanner)
 	cov := &coverage{}
 	cov.File = fileArr
+	cov.Version = SonarSchemaVersion
 	xmlForm, marshalError := xml.Marshal(cov)
 	check(marshalError)
 	writeError := ioutil.WriteFile(outputFile, xmlForm, 0644)

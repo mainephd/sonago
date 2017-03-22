@@ -3,8 +3,8 @@ package main
 
 // Coverage is generated from an XSD element
 type coverage struct {
-	//Version positiveInteger `xml:"version,attr"`
-	File []File `xml:"file"`
+	Version int    `xml:"version,attr"`
+	File    []File `xml:"file"`
 }
 
 // File is generated from an XSD element

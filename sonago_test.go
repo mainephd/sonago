@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/xml"
 	"flag"
 	"io/ioutil"
 
@@ -11,9 +12,11 @@ import (
 var _ = Describe("Sonago", func() {
 	var expectedCoverageOutput []byte
 	var expectedFileName string
+	var expectedCoverageStruct coverage
 	BeforeEach(func() {
 		expectedFileName = "coverage.xml"
 		expectedCoverageOutput, _ = ioutil.ReadFile(expectedFileName)
+		xml.Unmarshal(expectedCoverageOutput, expectedCoverageStruct)
 	})
 	Describe("when outputfile is specified it", func() {
 		It("should write to the file specified", func() {
@@ -22,7 +25,9 @@ var _ = Describe("Sonago", func() {
 			main()
 			file, err := ioutil.ReadFile(outputFilename)
 			Expect(err).ToNot(HaveOccurred())
-			Expect(file).To(Equal(expectedCoverageOutput))
+			var actualCoverageStruct coverage
+			xml.Unmarshal(file, actualCoverageStruct)
+			Expect(actualCoverageStruct).To(Equal(expectedCoverageStruct))
 		})
 	})
 	Describe("when inputfile is specified", func() {
@@ -32,7 +37,9 @@ var _ = Describe("Sonago", func() {
 			main()
 			file, err := ioutil.ReadFile(expectedFileName)
 			Expect(err).ToNot(HaveOccurred())
-			Expect(file).To(Equal(expectedCoverageOutput))
+			var actualCoverageStruct coverage
+			xml.Unmarshal(file, actualCoverageStruct)
+			Expect(actualCoverageStruct).To(Equal(expectedCoverageStruct))
 		})
 	})
 	Describe("when outputfile is not specified", func() {
@@ -40,7 +47,9 @@ var _ = Describe("Sonago", func() {
 			main()
 			file, err := ioutil.ReadFile(expectedFileName)
 			Expect(err).ToNot(HaveOccurred())
-			Expect(file).To(Equal(expectedCoverageOutput))
+			var actualCoverageStruct coverage
+			xml.Unmarshal(file, actualCoverageStruct)
+			Expect(actualCoverageStruct).To(Equal(expectedCoverageStruct))
 		})
 	})
 	Describe("when inputfile is not specified", func() {
@@ -48,8 +57,9 @@ var _ = Describe("Sonago", func() {
 			main()
 			file, err := ioutil.ReadFile(expectedFileName)
 			Expect(err).ToNot(HaveOccurred())
-			Expect(file).To(Equal(expectedCoverageOutput))
-
+			var actualCoverageStruct coverage
+			xml.Unmarshal(file, actualCoverageStruct)
+			Expect(actualCoverageStruct).To(Equal(expectedCoverageStruct))
 		})
 	})
 
