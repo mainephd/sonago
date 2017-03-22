@@ -19,7 +19,6 @@ const (
 	CoverageStartAndEndLineDelimiter = ","
 	// CoveredAndUnCoveredLinesDelimiter - Delimiter used between covered lines and uncovered lines
 	CoveredAndUnCoveredLinesDelimiter = " "
-
 	// SonarSchemaVersion dictates the version of the sonar generic code coverage schema
 	SonarSchemaVersion = 1
 )

@@ -1,5 +1,5 @@
 <coverage version="1">
-    <file path="github.homedepot.com/houdini/register-gateway-server/data/masterdataapi.go">
+    <file path="file1.go">
         <lineToCover lineNumber="22" covered="true"></lineToCover>
         <lineToCover lineNumber="23" covered="true"></lineToCover>
         <lineToCover lineNumber="24" covered="true"></lineToCover>
