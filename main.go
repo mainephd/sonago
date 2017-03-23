@@ -5,7 +5,9 @@ import (
 	"encoding/xml"
 	"flag"
 	"io/ioutil"
+	"log"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -62,7 +64,7 @@ func processCoverageData(scanner *bufio.Scanner) []File {
 		data := scanner.Text()
 		cover := strings.Split(data, CoverageFileDelimiter)
 		if cover[0] != "mode" {
-			filePath := cover[0]
+			filePath := trimFilePath(cover[0])
 			if fileMap[filePath] == nil { // New FilePath Entry is found
 				fileMap[filePath] = splitStartAndEndLineNumbers(cover[1])
 			} else { // Old FilePath Entry...just append covered lines
@@ -81,6 +83,23 @@ func processCoverageData(scanner *bufio.Scanner) []File {
 	}
 
 	return returnFileArrays
+}
+
+func trimFilePath(filePath string) string {
+	pwd, err := os.Getwd()
+	if err != nil {
+		log.Printf("Error while retrieving PWD, error: %s", err)
+		return filePath
+	}
+	dirPath := path.Dir(filePath)
+	if strings.HasSuffix(pwd, dirPath) {
+		// filePath=github.com/houdini/app-code/util.go, returns util.go
+		return path.Base(filePath)
+	}
+	// filePath=github.com/houdini/app-code/data/util.go, returns data/util.go
+	base := path.Base(pwd)
+	start := strings.Index(filePath, base)
+	return filePath[start+len(base)+1:]
 }
 
 func splitStartAndEndLineNumbers(startAndEndLines string) []LineToCover {

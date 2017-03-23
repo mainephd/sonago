@@ -1,3 +1,4 @@
 mode: set
 file1.go:22.13,29.2 2 1
 file1.go:31.60,34.16 3 0
+testDir/file2.go:31.60,34.16 3 0
