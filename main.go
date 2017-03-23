@@ -112,7 +112,7 @@ func splitStartAndEndLineNumbers(startAndEndLines string) []LineToCover {
 	if coveredAndUnCoveredLines[2] == "1" {
 		covered = true
 	}
-	for i := startLine; i < endLine; i++ {
+	for i := startLine; i <= endLine; i++ {
 		lToCover = append(lToCover, LineToCover{
 			LineNumber: i,
 			Covered:    covered,
